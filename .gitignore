@@ -1,0 +1,9 @@
+# VSCode files
+*.code-workspace
+
+# Python files
+__pycache__
+
+# System files
+.*
+!.gitignore
