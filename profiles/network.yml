@@ -1,0 +1,262 @@
+parents:
+    - config
+
+network:
+    aws-us-east-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: us-east-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-us-east-2:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: us-east-2
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-us-west-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: us-west-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-us-west-2:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: us-west-2
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-ca-central-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: ca-central-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-sa-east-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: sa-east-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-eu-north-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: eu-north-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-eu-central-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: eu-central-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-eu-west-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: eu-west-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-eu-west-2:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: eu-west-2
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-eu-west-3:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: eu-west-3
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-eu-south-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: eu-south-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-ap-east-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: ap-east-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-ap-northeast-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: ap-northeast-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-ap-northeast-2:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: ap-northeast-2
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-ap-northeast-3:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: ap-northeast-3
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-ap-south-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: ap-south-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-ap-southeast-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: ap-southeast-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-ap-southeast-2:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: ap-southeast-2
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-af-south-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: af-south-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+    aws-me-south-1:
+        when_in: "@aws_networks"
+        provider: aws
+        cidr_base: "@network_cidr_base"
+        cidr_prefix: "@network_cidr_prefix"
+        region: me-south-1
+        dns_support: "@network_dns_support"
+        groups: "@network_groups"
+
+network_peering:
+    aws: "@aws_networks"
+
+firewall:
+    all:
+        network: "@aws_networks"
+        groups: "@core_firewall_groups"
+        rules:
+            all-out:
+                mode: egress
+                protocol: all
+                from_port: 0
+                to_port: 0
+            all-in:
+                mode: ingress
+                protocol: all
+                from_port: 0
+                to_port: 65535
+
+    internet:
+        network: "@aws_networks"
+        groups: "@core_firewall_groups"
+        rules:
+            all-out:
+                mode: egress
+                protocol: all
+                from_port: 0
+                to_port: 0
+            icmp-in:
+                mode: ingress
+                protocol: icmp
+                from_port: 8
+                to_port: 0
+
+    ssh-external:
+        network: "@aws_networks"
+        groups: "@core_firewall_groups"
+        rules:
+            tcp-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@ssh_port"
+                to_port: "@ssh_port"
+
+    ssh-internal:
+        network: "@aws_networks"
+        groups: "@core_firewall_groups"
+        rules:
+            tcp-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@ssh_port"
+                to_port: "@ssh_port"
+                cidrs: "@network_cidr_base"
+
+    nfs:
+        network: "@aws_networks"
+        groups: "@core_firewall_groups"
+        rules:
+            tcp-in:
+                mode: ingress
+                protocol: tcp
+                from_port: 2049
+                to_port: 2049
+            udp-in:
+                mode: ingress
+                protocol: udp
+                from_port: 2049
+                to_port: 2049

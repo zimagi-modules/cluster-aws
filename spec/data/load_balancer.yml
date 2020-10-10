@@ -1,0 +1,36 @@
+plugin:
+    load_balancer:
+        providers:
+            aws_network:
+                subtypes:
+                    load_balancer:
+                        mixins: [aws_service]
+                        related_values:
+                            subnet_ids:
+                                field: subnets
+                                lookup: subnet_id
+                            security_groups:
+                                field: firewalls
+                                lookup: security_group_id
+                    load_balancer_listener:
+                        mixins: [aws_service]
+
+            aws_application:
+                base: aws_network
+                subtypes:
+                    load_balancer:
+                        option:
+                            idle_timeout:
+                                type: int
+                                default: 60
+                                help: "Idle timeout (secs)"
+                    load_balancer_listener:
+                        option:
+                            target_protocol:
+                                type: str
+                                default: "http"
+                                help: "Target protocol (http or https)"
+                            ssl_policy:
+                                type: str
+                                default: "ELBSecurityPolicy-2016-08"
+                                help: "SSL policy definition"

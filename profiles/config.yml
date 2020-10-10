@@ -1,0 +1,73 @@
+parents:
+    - module: cluster
+      profile: config
+
+config:
+    domain_provider: route53
+
+    aws_networks:
+        - aws-us-east-1
+        - aws-us-east-2
+        - aws-us-west-1
+        - aws-us-west-2
+        - aws-ca-central-1
+        - aws-sa-east-1
+        - aws-eu-north-1
+        - aws-eu-central-1
+        - aws-eu-west-1
+        - aws-eu-west-2
+        - aws-eu-west-3
+        - aws-eu-south-1
+        - aws-ap-east-1
+        - aws-ap-northeast-1
+        - aws-ap-northeast-2
+        - aws-ap-northeast-3
+        - aws-ap-south-1
+        - aws-ap-southeast-1
+        - aws-ap-southeast-2
+        - aws-af-south-1
+        - aws-me-south-1
+
+    aws_nat_subnets:
+        - nat-a
+        - nat-b
+        - nat-c
+
+    # Ubuntu 20.04LTS hvm:ebs-ssd
+    aws_ubuntu_user: ubuntu
+    aws_ubuntu_image:
+        aws-us-east-1: ami-06c8ff16263f3db59
+        aws-us-east-2: ami-045a25a3e38518838
+        aws-us-west-1: ami-036e212884af0f982
+        aws-us-west-2: ami-02434e865f9594875
+        aws-ca-central-1: ami-0e203cecdf2da5eb2
+        aws-sa-east-1: ami-0f63b957b1d1cafe4
+        aws-eu-north-1: ami-0ac950d5f5d427d06
+        aws-eu-central-1: ami-078bc46c55d0e1238
+        aws-eu-west-1: ami-02331c6ac2e29429f
+        aws-eu-west-2: ami-00fc9310aee438387
+        aws-eu-west-3: ami-0f18b88aa23f8d929
+        aws-eu-south-1: ami-0207beff82d5d6d4c
+        aws-ap-east-1: ami-acfabadd
+        aws-ap-northeast-1: ami-01eb709c68485dfa8
+        aws-ap-northeast-2: ami-08364d0e699b512d2
+        aws-ap-northeast-3: ami-0d4d3819f42dd3023
+        aws-ap-south-1: ami-0244526712b13b081
+        aws-ap-southeast-1: ami-0eda6e135e78c1c35
+        aws-ap-southeast-2: ami-081fcba04ccce9bff
+        aws-af-south-1: ami-08d97e97ee67e9a44
+        aws-me-south-1: ami-02a6b255727b67446
+
+    aws_storage_performance_mode: generalPurpose
+    aws_storage_throughput_mode: bursting
+    aws_storage_provisioned_throughput: null
+    aws_storage_encrypted: false
+
+    aws_efs_volume_options:
+        - nfsvers=4.1
+        - rsize=1048576
+        - wsize=1048576
+        - hard
+        - timeo=600
+        - retrans=2
+        - noresvport

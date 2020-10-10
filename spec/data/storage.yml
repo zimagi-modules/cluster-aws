@@ -1,0 +1,44 @@
+plugin:
+    storage:
+        providers:
+            efs:
+                subtypes:
+                    storage:
+                        mixins: [aws_service]
+                        option:
+                            performance_mode:
+                                type: str
+                                default: "generalPurpose"
+                                help: "AWS EFS performance mode (can also be: maxIO)"
+                                config_name: aws_efs_perf_mode
+                            throughput_mode:
+                                type: str
+                                default: "bursting"
+                                help: "AWS EFS throughput mode (can also be: provisioned)"
+                                config_name: aws_efs_tp_mode
+                            provisioned_throughput:
+                                type: int
+                                help: "AWS EFS throughput in MiB/s"
+                                config_name: aws_efs_prov_tp
+                            encrypted:
+                                type: bool
+                                default: false
+                                help: "AWS EFS encrypted filesystem?"
+                                config_name: aws_efs_encrypted
+
+                    mount:
+                        mixins: [aws_service]
+                        option:
+                            remote_host:
+                                type: str
+                                help: "Remote host to connect storage mount"
+                            remote_path:
+                                type: str
+                                help: "Remote filepath for storage mount access"
+                        related_values:
+                            security_groups:
+                                field: firewalls
+                                lookup: security_group_id
+                        output_map:
+                            mount_ip: remote_host
+                            mount_path: remote_path

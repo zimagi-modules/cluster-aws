@@ -1,0 +1,82 @@
+plugin:
+    server:
+        providers:
+            ec2:
+                mixins: [aws_service]
+                requirement:
+                    image:
+                        type: str
+                        help: "AWS image name"
+                        config_name: aws_ec2_image
+                option:
+                    machine:
+                        type: str
+                        default: "t2.small"
+                        help: "AWS instance type"
+                        config_name: aws_ec2_type
+                    tenancy:
+                        type: str
+                        default: "default"
+                        help: "AWS instance tenancy (default | dedicated)"
+                        config_name: aws_ec2_tenancy
+                    monitoring:
+                        type: bool
+                        default: false
+                        help: "AWS monitoring enabled?"
+                        config_name: aws_ec2_monitoring
+                    user:
+                        type: str
+                        default: "ubuntu"
+                        help: "Server SSH user"
+                        config_name: aws_ec2_user
+                    ebs_optimized:
+                        type: bool
+                        default: false
+                        help: "AWS EBS obtimized server?"
+                        config_name: aws_ec2_ebs_optimized
+                    ebs_type:
+                        type: str
+                        default: "gp2"
+                        help: "AWS data drive EBS type"
+                        config_name: aws_ec2_ebs_type
+                    ebs_size:
+                        type: int
+                        default: 10
+                        help: "AWS data drive EBS volume size (GB)"
+                        config_name: aws_ec2_ebs_size
+                    ebs_iops:
+                        type: int
+                        help: "AWS data drive EBS provisioned IOPS"
+                        config_name: aws_ec2_ebs_iops
+                related_values:
+                    security_groups:
+                        field: firewalls
+                        lookup: security_group_id
+                output_map:
+                    public_ip_address: public_ip
+                    private_ip_address: private_ip
+
+    server_volume:
+        providers:
+            aws_ebs:
+                mixins: [aws_service]
+                option:
+                    ebs_encrypted:
+                        type: bool
+                        default: false
+                        help: "AWS EBS encrypted volume?"
+                        config_name: aws_ec2_ebs_encrypted
+                    ebs_type:
+                        type: str
+                        default: "gp2"
+                        help: "AWS data drive EBS type"
+                        config_name: aws_ec2_ebs_type
+                    ebs_size:
+                        type: int
+                        default: 10
+                        help: "AWS data drive EBS volume size (GB)"
+                        config_name: aws_ec2_ebs_size
+                    ebs_iops:
+                        type: int
+                        help: "AWS data drive EBS provisioned IOPS"
+                        config_name: aws_ec2_ebs_iops

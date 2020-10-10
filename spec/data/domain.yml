@@ -1,0 +1,9 @@
+plugin:
+    domain:
+        providers:
+            route53:
+                subtypes:
+                    domain:
+                        mixins: [aws_service]
+                    domain_record:
+                        mixins: [aws_service]

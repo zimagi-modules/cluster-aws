@@ -1,0 +1,9 @@
+plugin_mixins:
+    aws_service:
+        class: AWSServiceMixin
+        option:
+            region:
+                type: str
+                default: "us-east-1"
+                help: "AWS service region"
+                config_name: aws_region

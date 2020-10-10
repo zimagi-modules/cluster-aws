@@ -1,0 +1,40 @@
+plugin:
+    network:
+        providers:
+            aws:
+                subtypes:
+                    network:
+                        mixins: [aws_service]
+                        option:
+                            tenancy:
+                                type: str
+                                default: default
+                                help: "AWS VPC instance tenancy (default | dedicated)"
+                                config_name: aws_vpc_tenancy
+                            dns_support:
+                                type: bool
+                                default: true
+                                help: "AWS VPC DNS support"
+                                config_name: aws_vpc_dns_support
+                            dns_hostnames:
+                                type: bool
+                                default: false
+                                help: "AWS VPC DNS hostname assignment"
+                                config_name: aws_vpc_dns_hostnames
+                    subnet:
+                        mixins: [aws_service]
+                        option:
+                            zone:
+                                type: str
+                                help: "AWS availability zone (default random)"
+                                config_name: aws_zone
+                            zone_suffix:
+                                type: str
+                                help: "AWS availability zone suffix (appended to region)"
+                                config_name: aws_zone_suffix
+                    firewall:
+                        mixins: [aws_service]
+                        output_map:
+                            security_group_id: [variables, resource_id]
+                    firewall_rule:
+                        mixins: [aws_service]

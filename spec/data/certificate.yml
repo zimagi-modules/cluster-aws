@@ -1,0 +1,5 @@
+plugin:
+    certificate:
+        providers:
+            aws:
+                mixins: [aws_service]

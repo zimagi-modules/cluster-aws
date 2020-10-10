@@ -1,0 +1,8 @@
+parents:
+    - config
+
+domain:
+    "@root_domain":
+        when: "@provision_domain"
+        provider: "@domain_provider"
+        email: "@root_domain_email"
