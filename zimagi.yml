@@ -1,0 +1,8 @@
+name: aws
+
+scripts: scripts/install.sh
+requirements: requirements.txt
+
+modules:
+    - remote: https://github.com/dccs-tech/zimagi-cluster.git
+      reference: master
