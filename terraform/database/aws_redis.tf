@@ -14,24 +14,6 @@ resource "aws_elasticache_subnet_group" "main" {
   subnet_ids = var.subnet_ids
 }
 
-resource "aws_elasticache_parameter_group" "main" {
-  name   = local.identifier
-  family = var.family
-
-  dynamic "parameter" {
-    for_each = var.parameters == null ? [] : var.parameters
-    content {
-      name  = parameter.value.name
-      value = parameter.value.value
-    }
-  }
-}
-
-resource "aws_kms_key" "cluster" {
-  count = var.encrypted ? 1 : 0
-  deletion_window_in_days = 30
-}
-
 resource "aws_elasticache_replication_group" "main" {
   replication_group_id          = local.identifier
   replication_group_description = local.identifier
@@ -41,22 +23,17 @@ resource "aws_elasticache_replication_group" "main" {
   engine                        = "redis"
   engine_version                = var.engine_version
   port                          = var.port
-  auth_token                    = var.encrypted ? var.user_password : null
 
-  parameter_group_name          = aws_elasticache_parameter_group.main.name
+  parameter_group_name          = var.parameter_group_name
 
   snapshot_retention_limit      = var.retention_period
   snapshot_window               = var.backup_window
   maintenance_window            = var.maintenance_window
 
   automatic_failover_enabled    = true
-  auto_minor_version_upgrade    = true
+  auto_minor_version_upgrade    = false
 
   node_type                     = var.instance_type
-
-  at_rest_encryption_enabled    = var.encrypted
-  transit_encryption_enabled    = var.encrypted
-  kms_key_id                    = var.encrypted ? aws_kms_key.cluster.0.arn : null
 
   cluster_mode {
     replicas_per_node_group     = var.instances_per_group

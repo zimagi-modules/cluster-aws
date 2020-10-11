@@ -14,19 +14,6 @@ resource "aws_elasticache_subnet_group" "main" {
   subnet_ids = var.subnet_ids
 }
 
-resource "aws_elasticache_parameter_group" "main" {
-  name   = local.identifier
-  family = var.family
-
-  dynamic "parameter" {
-    for_each = var.parameters == null ? [] : var.parameters
-    content {
-      name  = parameter.value.name
-      value = parameter.value.value
-    }
-  }
-}
-
 resource "aws_elasticache_cluster" "main" {
   cluster_id               = local.identifier
   subnet_group_name        = aws_elasticache_subnet_group.main.name
@@ -37,7 +24,7 @@ resource "aws_elasticache_cluster" "main" {
   engine_version           = var.engine_version
   port                     = var.port
 
-  parameter_group_name     = aws_elasticache_parameter_group.main.name
+  parameter_group_name     = var.parameter_group_name
 
   snapshot_retention_limit = var.retention_period
   snapshot_window          = var.backup_window

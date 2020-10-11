@@ -9,12 +9,6 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_kms_key" "cluster" {
-  count = var.encrypted ? 1 : 0
-  description             = "aurora-serverless ${local.identifier}"
-  deletion_window_in_days = 30
-}
-
 resource "aws_db_subnet_group" "main" {
   name       = local.identifier
   subnet_ids = var.subnet_ids
@@ -35,27 +29,25 @@ resource "aws_rds_cluster_parameter_group" "main" {
 }
 
 resource "aws_rds_cluster" "main" {
-  cluster_identifier      = local.identifier
-  db_subnet_group_name    = aws_db_subnet_group.main.name
-  vpc_security_group_ids  = var.security_groups
-  port                    = var.port
+  cluster_identifier              = local.identifier
+  db_subnet_group_name            = aws_db_subnet_group.main.name
+  vpc_security_group_ids          = var.security_groups
+  port                            = var.port
 
-  engine                  = var.engine
-  engine_version          = var.engine_version
-  engine_mode             = "serverless"
-  storage_encrypted       = var.encrypted
-  kms_key_id              = var.encrypted ? aws_kms_key.cluster.0.arn : null
+  engine                          = var.engine
+  engine_version                  = var.engine_version
+  engine_mode                     = "serverless"
 
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.main.name
 
-  database_name           = var.database_name
-  master_username         = var.user_name
-  master_password         = var.user_password
+  database_name                   = var.database_name
+  master_username                 = var.user_name
+  master_password                 = var.user_password
 
-  backup_retention_period = var.retention_period
-  preferred_backup_window = var.backup_window
-  preferred_maintenance_window = var.maintenance_window
-  final_snapshot_identifier = local.identifier
+  backup_retention_period         = var.retention_period
+  preferred_backup_window         = var.backup_window
+  preferred_maintenance_window    = var.maintenance_window
+  final_snapshot_identifier       = local.identifier
 
   timeouts {
     create = var.create_timeout

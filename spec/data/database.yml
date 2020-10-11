@@ -34,10 +34,6 @@ _shared_aws_aurora_options: &shared_aws_aurora_options
         type: str
         default: "10.7"
         help: "Database engine version"
-    encrypted:
-        type: bool
-        default: false
-        help: "Encrypt database contents"
     create_timeout:
         type: str
         default: "120m"
@@ -61,10 +57,6 @@ _shared_aws_elasticache_options: &shared_aws_elasticache_options
         type: str
         default: "cache.t3.small"
         help: "Database instance type"
-    parameters:
-        type: list
-        default: null
-        help: "Database engine parameters (list of {'name': *, 'value': *})"
 
 plugin:
     database:
@@ -137,14 +129,14 @@ plugin:
                     <<: *related_values
                 option:
                     <<: *shared_aws_elasticache_options
-                    family:
-                        type: str
-                        default: "memcached1.5"
-                        help: "Database engine family"
                     engine_version:
                         type: str
                         default: "1.5.16"
                         help: "Database engine version"
+                    parameter_group_name:
+                        type: str
+                        default: "default.memcached1.5"
+                        help: "Database default parameter group name"
                     instance_count:
                         type: int
                         default: 2
@@ -158,14 +150,14 @@ plugin:
                     <<: *related_values
                 option:
                     <<: *shared_aws_elasticache_options
-                    family:
-                        type: str
-                        default: "redis6.x"
-                        help: "Database engine family"
                     engine_version:
                         type: str
-                        default: "6.x"
+                        default: "5.0.6"
                         help: "Database engine version"
+                    parameter_group_name:
+                        type: str
+                        default: "default.redis5.0.cluster.on"
+                        help: "Database default parameter group name"
                     instance_groups:
                         type: int
                         default: 1
@@ -174,9 +166,5 @@ plugin:
                         type: int
                         default: 1
                         help: "Database replica instances per group"
-                    encrypted:
-                        type: bool
-                        default: false
-                        help: "Encrypt database contents"
                 output_map:
                     host: host
