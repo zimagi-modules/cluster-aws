@@ -57,7 +57,7 @@ resource "aws_rds_cluster_parameter_group" "main" {
   }
 }
 
-resource "aws_rds_cluster" "default" {
+resource "aws_rds_cluster" "main" {
   cluster_identifier      = local.identifier
   db_subnet_group_name    = aws_db_subnet_group.main.name
   vpc_security_group_ids  = var.security_groups
@@ -80,7 +80,7 @@ resource "aws_rds_cluster" "default" {
   preferred_maintenance_window = var.maintenance_window
   final_snapshot_identifier = local.identifier
 
-  enabled_cloudwatch_logs_exports = var.log_level == null ? "error" : var.log_level
+  enabled_cloudwatch_logs_exports = var.log_level == null ? ["error"] : [var.log_level]
 
   timeouts {
     create = var.create_timeout

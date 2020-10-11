@@ -1,6 +1,6 @@
 
 locals {
-  identifier = "${var.name}-${var.network.name}"
+  identifier = "memcached-${var.name}-${var.network.name}"
 }
 
 provider "aws" {

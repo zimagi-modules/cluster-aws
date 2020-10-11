@@ -1,6 +1,6 @@
 
 locals {
-  identifier = "${var.name}-${var.network.name}"
+  identifier = "redis-${var.name}-${var.network.name}"
 }
 
 provider "aws" {
@@ -33,34 +33,34 @@ resource "aws_kms_key" "cluster" {
 }
 
 resource "aws_elasticache_replication_group" "main" {
-  replication_group_id       = local.identifier
-  subnet_group_name          = aws_elasticache_subnet_group.main.name
-  security_group_ids         = var.security_groups
+  replication_group_id          = local.identifier
+  replication_group_description = local.identifier
+  subnet_group_name             = aws_elasticache_subnet_group.main.name
+  security_group_ids            = var.security_groups
 
-  engine                     = "redis"
-  engine_version             = var.engine_version
-  port                       = var.port
-  auth_token                 = var.user_password
+  engine                        = "redis"
+  engine_version                = var.engine_version
+  port                          = var.port
+  auth_token                    = var.encrypted ? var.user_password : null
 
-  parameter_group_name       = aws_elasticache_parameter_group.redis.name
+  parameter_group_name          = aws_elasticache_parameter_group.main.name
 
-  snapshot_retention_limit   = var.retention_period
-  snapshot_window            = var.backup_window
-  maintenance_window         = var.maintenance_window
-  snapshot_name              = local.identifier
+  snapshot_retention_limit      = var.retention_period
+  snapshot_window               = var.backup_window
+  maintenance_window            = var.maintenance_window
 
-  automatic_failover_enabled = true
-  auto_minor_version_upgrade = true
+  automatic_failover_enabled    = true
+  auto_minor_version_upgrade    = true
 
-  node_type                  = var.instance_type
+  node_type                     = var.instance_type
 
-  at_rest_encryption_enabled = var.encrypted
-  transit_encryption_enabled = var.encrypted
-  kms_key_id                 = var.encrypted ? aws_kms_key.cluster.0.arn : null
+  at_rest_encryption_enabled    = var.encrypted
+  transit_encryption_enabled    = var.encrypted
+  kms_key_id                    = var.encrypted ? aws_kms_key.cluster.0.arn : null
 
   cluster_mode {
-    replicas_per_node_group = var.instances_per_group
-    num_node_groups         = var.instance_groups
+    replicas_per_node_group     = var.instances_per_group
+    num_node_groups             = var.instance_groups
   }
 }
 
