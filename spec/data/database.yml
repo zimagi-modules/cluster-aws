@@ -1,4 +1,27 @@
+_related_values: &related_values
+    subnet_ids:
+        field: subnets
+        lookup: subnet_id
+    security_groups:
+        field: firewalls
+        lookup: security_group_id
+
 _shared_aws_options: &shared_aws_options
+    retention_period:
+        type: int
+        default: 5
+        help: "Database backup retention period"
+    backup_window:
+        type: str
+        default: "07:00-09:00"
+        help: "Database daily backup window (UTC)"
+    maintenance_window:
+        type: str
+        default: "wed:04:00-wed:04:30"
+        help: "Database weekly maintenance window (UTC)"
+
+_shared_aws_aurora_options: &shared_aws_aurora_options
+    <<: *shared_aws_options
     family:
         type: str
         default: "aurora-postgresql11"
@@ -27,22 +50,21 @@ _shared_aws_options: &shared_aws_options
         type: str
         default: "120m"
         help: "Database delete timeout"
-    retention_period:
-        type: int
-        default: 5
-        help: "Database backup retention period"
-    backup_window:
-        type: str
-        default: "07:00-09:00"
-        help: "Database daily backup window (UTC)"
-    maintenance_window:
-        type: str
-        default: "wed:04:00-wed:04:30"
-        help: "Database weekly maintenance window (UTC)"
     cluster_parameters:
         type: list
         default: null
         help: "Database engine cluster parameters (list of {'name': *, 'value': *, ...})"
+
+_shared_aws_elasticache_options: &shared_aws_elasticache_options
+    <<: *shared_aws_options
+    instance_type:
+        type: str
+        default: "cache.t3.small"
+        help: "Database instance type"
+    parameters:
+        type: list
+        default: null
+        help: "Database engine parameters (list of {'name': *, 'value': *})"
 
 plugin:
     database:
@@ -50,14 +72,9 @@ plugin:
             aurora:
                 mixins: [aws_service]
                 related_values:
-                    subnet_ids:
-                        field: subnets
-                        lookup: subnet_id
-                    security_groups:
-                        field: firewalls
-                        lookup: security_group_id
+                    <<: *related_values
                 option:
-                    <<: *shared_aws_options
+                    <<: *shared_aws_aurora_options
                     engine_mode:
                         type: str
                         default: "provisioned"
@@ -86,14 +103,9 @@ plugin:
             aurora_serverless:
                 mixins: [aws_service]
                 related_values:
-                    subnet_ids:
-                        field: subnets
-                        lookup: subnet_id
-                    security_groups:
-                        field: firewalls
-                        lookup: security_group_id
+                    <<: *related_values
                 option:
-                    <<: *shared_aws_options
+                    <<: *shared_aws_aurora_options
                     auto_pause:
                         type: bool
                         default: true
@@ -114,3 +126,49 @@ plugin:
                         type: str
                         default: "RollbackCapacityChange"
                         help: "Timeout strategy"
+
+            aws_memcached:
+                mixins: [aws_service]
+                related_values:
+                    <<: *related_values
+                option:
+                    <<: *shared_aws_elasticache_options
+                    family:
+                        type: str
+                        default: "memcached1.5"
+                        help: "Database engine family"
+                    engine_version:
+                        type: str
+                        default: "1.5.16"
+                        help: "Database engine version"
+                    instance_count:
+                        type: int
+                        default: 2
+                        help: "Database instance count"
+
+            aws_redis:
+                mixins: [aws_service]
+                related_values:
+                    <<: *related_values
+                option:
+                    <<: *shared_aws_elasticache_options
+                    family:
+                        type: str
+                        default: "redis6.0"
+                        help: "Database engine family"
+                    engine_version:
+                        type: str
+                        default: "6.x"
+                        help: "Database engine version"
+                    instance_groups:
+                        type: int
+                        default: 1
+                        help: "Database instance groups (shards)"
+                    instances_per_groups:
+                        type: int
+                        default: 1
+                        help: "Database replica instances per group"
+                    encrypted:
+                        type: bool
+                        default: false
+                        help: "Encrypt database contents"
