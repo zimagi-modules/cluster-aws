@@ -11,8 +11,13 @@ provider "aws" {
 
 resource "aws_kms_key" "cluster" {
   count = var.encrypted ? 1 : 0
-  description             = "database ${local.identifier}"
+  description             = "aurora-serverless ${local.identifier}"
   deletion_window_in_days = 30
+}
+
+resource "aws_db_subnet_group" "main" {
+  name       = local.identifier
+  subnet_ids = var.subnet_ids
 }
 
 resource "aws_rds_cluster_parameter_group" "main" {
@@ -31,7 +36,7 @@ resource "aws_rds_cluster_parameter_group" "main" {
 
 resource "aws_rds_cluster" "default" {
   cluster_identifier      = local.identifier
-  availability_zones      = var.subnet_ids
+  db_subnet_group_name    = aws_db_subnet_group.main.name
   vpc_security_group_ids  = var.security_groups
   port                    = var.port
 
@@ -61,11 +66,11 @@ resource "aws_rds_cluster" "default" {
   }
 
   scaling_configuration {
-    auto_pause               = var.auto_pause # true
-    seconds_until_auto_pause = var.auto_pause_period # 300
-    max_capacity             = var.max_capacity # 8
-    min_capacity             = var.min_capacity # 1
-    timeout_action           = var.timeout_action # RollbackCapacityChange
+    auto_pause               = var.auto_pause
+    seconds_until_auto_pause = var.auto_pause_period
+    max_capacity             = var.max_capacity
+    min_capacity             = var.min_capacity
+    timeout_action           = var.timeout_action
   }
 }
 

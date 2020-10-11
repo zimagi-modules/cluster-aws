@@ -34,8 +34,13 @@ resource "aws_iam_role_policy_attachment" "rds_enhanced_monitoring" {
 
 resource "aws_kms_key" "cluster" {
   count = var.encrypted ? 1 : 0
-  description             = "database ${var.name}"
+  description             = "aurora ${local.identifier}"
   deletion_window_in_days = 30
+}
+
+resource "aws_db_subnet_group" "main" {
+  name       = local.identifier
+  subnet_ids = var.subnet_ids
 }
 
 resource "aws_rds_cluster_parameter_group" "main" {
@@ -54,7 +59,7 @@ resource "aws_rds_cluster_parameter_group" "main" {
 
 resource "aws_rds_cluster" "default" {
   cluster_identifier      = local.identifier
-  availability_zones      = var.subnet_ids
+  db_subnet_group_name    = aws_db_subnet_group.main.name
   vpc_security_group_ids  = var.security_groups
   port                    = var.port
 
@@ -108,6 +113,7 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
   instance_class          = var.instance_type
   publicly_accessible     = false
 
+  db_subnet_group_name    = aws_db_subnet_group.main.name
   db_parameter_group_name = aws_db_parameter_group.main.name
 
   monitoring_role_arn     = var.enhanced_monitoring ? aws_iam_role.rds_enhanced_monitoring.0.arn : null
