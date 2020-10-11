@@ -1,0 +1,116 @@
+_shared_aws_options: &shared_aws_options
+    family:
+        type: str
+        default: "aurora-postgresql11"
+        help: "Database engine family"
+    engine:
+        type: str
+        default: "aurora-postgresql"
+        help: "Database engine"
+    engine_version:
+        type: str
+        default: "11.8"
+        help: "Database engine version"
+    encrypted:
+        type: bool
+        default: false
+        help: "Encrypt database contents"
+    create_timeout:
+        type: str
+        default: "120m"
+        help: "Database create timeout"
+    update_timeout:
+        type: str
+        default: "120m"
+        help: "Database update timeout"
+    delete_timeout:
+        type: str
+        default: "120m"
+        help: "Database delete timeout"
+    retention_period:
+        type: int
+        default: 5
+        help: "Database backup retention period"
+    backup_window:
+        type: str
+        default: "07:00-09:00"
+        help: "Database daily backup window (UTC)"
+    maintenance_window:
+        type: str
+        default: "wed:04:00-wed:04:30"
+        help: "Database weekly maintenance window (UTC)"
+    cluster_parameters:
+        type: list
+        default: null
+        help: "Database engine cluster parameters (list of {'name': *, 'value': *, ...})"
+
+plugin:
+    database:
+        providers:
+            aurora:
+                mixins: [aws_service]
+                related_values:
+                    subnet_ids:
+                        field: subnets
+                        lookup: subnet_id
+                    security_groups:
+                        field: firewalls
+                        lookup: security_group_id
+                option:
+                    <<: *shared_aws_options
+                    engine_mode:
+                        type: str
+                        default: "provisioned"
+                        help: "Database backend mode"
+                    enhanced_monitoring:
+                        type: bool
+                        default: false
+                        help: "Enable enhanced monitoring"
+                    monitoring_interval:
+                        type: int
+                        default: 5
+                        help: "Enhanced monitoring interval"
+                    instance_parameters:
+                        type: list
+                        default: null
+                        help: "Database engine instance parameters (list of {'name': *, 'value': *, ...})"
+                    instance_count:
+                        type: int
+                        default: 3
+                        help: "Database instance count"
+                    instance_type:
+                        type: str
+                        default: "db.t3.medium"
+                        help: "Database instance type"
+
+            aurora_serverless:
+                mixins: [aws_service]
+                related_values:
+                    subnet_ids:
+                        field: subnets
+                        lookup: subnet_id
+                    security_groups:
+                        field: firewalls
+                        lookup: security_group_id
+                option:
+                    <<: *shared_aws_options
+                    auto_pause:
+                        type: bool
+                        default: true
+                        help: "Auto pause database when no active connections"
+                    auto_pause_period:
+                        type: int
+                        default: 300
+                        help: "Auto pause wait period (seconds)"
+                    max_capacity:
+                        type: int
+                        default: 8
+                        help: "Maximum capacity (ACU)"
+                    min_capacity:
+                        type: int
+                        default: 1
+                        help: "Minimum capacity (ACU)"
+                    timeout_action:
+                        type: str
+                        default: "RollbackCapacityChange"
+                        help: "Timeout strategy"
