@@ -17,14 +17,14 @@ _shared_aws_options: &shared_aws_options
         help: "Database daily backup window (UTC)"
     maintenance_window:
         type: str
-        default: "wed:04:00-wed:04:30"
+        default: "wed:04:00-wed:05:00"
         help: "Database weekly maintenance window (UTC)"
 
 _shared_aws_aurora_options: &shared_aws_aurora_options
     <<: *shared_aws_options
     family:
         type: str
-        default: "aurora-postgresql11"
+        default: "aurora-postgresql10"
         help: "Database engine family"
     engine:
         type: str
@@ -32,7 +32,7 @@ _shared_aws_aurora_options: &shared_aws_aurora_options
         help: "Database engine"
     engine_version:
         type: str
-        default: "11.8"
+        default: "10.7"
         help: "Database engine version"
     encrypted:
         type: bool
@@ -99,6 +99,8 @@ plugin:
                         type: str
                         default: "db.t3.medium"
                         help: "Database instance type"
+                output_map:
+                    host: host
 
             aurora_serverless:
                 mixins: [aws_service]
@@ -120,12 +122,14 @@ plugin:
                         help: "Maximum capacity (ACU)"
                     min_capacity:
                         type: int
-                        default: 1
+                        default: 2
                         help: "Minimum capacity (ACU)"
                     timeout_action:
                         type: str
                         default: "RollbackCapacityChange"
                         help: "Timeout strategy"
+                output_map:
+                    host: host
 
             aws_memcached:
                 mixins: [aws_service]
@@ -145,6 +149,8 @@ plugin:
                         type: int
                         default: 2
                         help: "Database instance count"
+                output_map:
+                    host: host
 
             aws_redis:
                 mixins: [aws_service]
@@ -154,7 +160,7 @@ plugin:
                     <<: *shared_aws_elasticache_options
                     family:
                         type: str
-                        default: "redis6.0"
+                        default: "redis6.x"
                         help: "Database engine family"
                     engine_version:
                         type: str
@@ -172,3 +178,5 @@ plugin:
                         type: bool
                         default: false
                         help: "Encrypt database contents"
+                output_map:
+                    host: host
