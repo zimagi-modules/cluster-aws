@@ -70,7 +70,6 @@ resource "aws_rds_cluster" "main" {
   backup_retention_period         = var.retention_period
   preferred_backup_window         = var.backup_window
   preferred_maintenance_window    = var.maintenance_window
-  final_snapshot_identifier       = local.identifier
 
   enabled_cloudwatch_logs_exports = var.log_level == null ? ["error"] : [var.log_level]
 
