@@ -48,6 +48,8 @@ resource "aws_rds_cluster" "main" {
   preferred_backup_window         = var.backup_window
   preferred_maintenance_window    = var.maintenance_window
 
+  skip_final_snapshot = true
+
   timeouts {
     create = var.create_timeout
     update = var.update_timeout

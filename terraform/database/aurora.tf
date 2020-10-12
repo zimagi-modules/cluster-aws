@@ -109,6 +109,8 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
 
   monitoring_role_arn     = var.enhanced_monitoring ? aws_iam_role.rds_enhanced_monitoring.0.arn : null
   monitoring_interval     = var.monitoring_interval
+
+  skip_final_snapshot = true
 }
 
 output "host" {
