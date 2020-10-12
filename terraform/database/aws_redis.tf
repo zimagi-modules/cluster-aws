@@ -30,17 +30,13 @@ resource "aws_elasticache_replication_group" "main" {
   snapshot_window               = var.backup_window
   maintenance_window            = var.maintenance_window
 
-  automatic_failover_enabled    = true
+  automatic_failover_enabled    = var.instance_count > 1 ? true : false
   auto_minor_version_upgrade    = false
 
   node_type                     = var.instance_type
-
-  cluster_mode {
-    replicas_per_node_group     = var.instances_per_group
-    num_node_groups             = var.instance_groups
-  }
+  number_cache_clusters         = var.instance_count
 }
 
 output "host" {
-  value = aws_elasticache_replication_group.main.configuration_endpoint_address
+  value = aws_elasticache_replication_group.main.primary_endpoint_address
 }

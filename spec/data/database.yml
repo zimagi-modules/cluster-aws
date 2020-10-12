@@ -156,15 +156,11 @@ plugin:
                         help: "Database engine version"
                     parameter_group_name:
                         type: str
-                        default: "default.redis5.0.cluster.on"
+                        default: "default.redis5.0"
                         help: "Database default parameter group name"
-                    instance_groups:
+                    instance_count:
                         type: int
-                        default: 1
-                        help: "Database instance groups (shards)"
-                    instances_per_groups:
-                        type: int
-                        default: 1
-                        help: "Database replica instances per group"
+                        default: 2
+                        help: "Database nodes (primary and read replicas)"
                 output_map:
                     host: host
