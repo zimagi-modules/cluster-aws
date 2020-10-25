@@ -71,7 +71,9 @@ resource "aws_rds_cluster" "main" {
   preferred_backup_window         = var.backup_window
   preferred_maintenance_window    = var.maintenance_window
 
-  enabled_cloudwatch_logs_exports = var.log_level == null ? ["error"] : [var.log_level]
+  skip_final_snapshot             = true
+
+  enabled_cloudwatch_logs_exports = var.log_level == null ? ["postgresql"] : [var.log_level]
 
   timeouts {
     create = var.create_timeout
@@ -109,8 +111,6 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
 
   monitoring_role_arn     = var.enhanced_monitoring ? aws_iam_role.rds_enhanced_monitoring.0.arn : null
   monitoring_interval     = var.monitoring_interval
-
-  skip_final_snapshot = true
 }
 
 output "host" {
