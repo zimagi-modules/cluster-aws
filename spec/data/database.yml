@@ -77,7 +77,7 @@ plugin:
                         help: "Enable enhanced monitoring"
                     monitoring_interval:
                         type: int
-                        default: 5
+                        default: 0
                         help: "Enhanced monitoring interval"
                     instance_parameters:
                         type: list
