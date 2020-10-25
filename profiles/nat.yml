@@ -1,30 +1,15 @@
 parents:
     - config
 
+config:
+    aws_network_names: "#prefix(@aws_networks || @aws_network_prefix);"
+
 subnet:
-    nat-a:
-        when_in: "@aws_nat_subnets"
-        network: "@aws_networks"
+    "nat-<<value>>":
+        foreach: "@aws_nat_subnets"
+        network: "@aws_network_names"
         cidr_prefix: 28
-        zone_suffix: a
-        use_public_ip: true
-        use_nat: true
-        groups: "@network_groups"
-
-    nat-b:
-        when_in: "@aws_nat_subnets"
-        network: "@aws_networks"
-        cidr_prefix: 28
-        zone_suffix: b
-        use_public_ip: true
-        use_nat: true
-        groups: "@network_groups"
-
-    nat-c:
-        when_in: "@aws_nat_subnets"
-        network: "@aws_networks"
-        cidr_prefix: 28
-        zone_suffix: c
+        zone_suffix: "<<value>>"
         use_public_ip: true
         use_nat: true
         groups: "@network_groups"
