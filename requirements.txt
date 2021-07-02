@@ -1,2 +1,2 @@
-boto3 == 1.11.12
-certbot_dns_route53 == 1.2.0
+boto3 == 1.17.103
+certbot_dns_route53 == 1.16.0
