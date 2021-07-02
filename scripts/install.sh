@@ -4,7 +4,7 @@
 #
 set -e
 
-TERRAFORM_AWS_VERSION=2.68.0
+TERRAFORM_AWS_VERSION=3.47.0
 
 if ! ls ~/.terraform.d/plugins/terraform-provider-aws_v${TERRAFORM_AWS_VERSION}_* 1>/dev/null 2>&1
 then
