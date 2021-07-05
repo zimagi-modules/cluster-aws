@@ -1,9 +1,6 @@
 parents:
     - config
 
-config:
-    aws_network_names: "#prefix(@aws_networks || @aws_network_prefix);"
-
 network:
     "@{aws_network_prefix}<<value>>":
         foreach: "@aws_networks"
@@ -12,15 +9,13 @@ network:
         cidr_prefix: "@network_cidr_prefix"
         region: "<<value>>"
         dns_support: "@network_dns_support"
-        groups: "@network_groups"
 
 network_peering:
-    aws: "@aws_network_names"
+    aws: "#prefix(@aws_networks || @aws_network_prefix);"
 
 firewall:
     all:
-        network: "@aws_network_names"
-        groups: "@core_firewall_groups"
+        network: "#prefix(@aws_networks || @aws_network_prefix);"
         rules:
             all-out:
                 mode: egress
@@ -34,8 +29,7 @@ firewall:
                 to_port: 65535
 
     internet:
-        network: "@aws_network_names"
-        groups: "@core_firewall_groups"
+        network: "#prefix(@aws_networks || @aws_network_prefix);"
         rules:
             all-out:
                 mode: egress
@@ -49,8 +43,7 @@ firewall:
                 to_port: 0
 
     ssh-external:
-        network: "@aws_network_names"
-        groups: "@core_firewall_groups"
+        network: "#prefix(@aws_networks || @aws_network_prefix);"
         rules:
             tcp-in:
                 mode: ingress
@@ -59,8 +52,7 @@ firewall:
                 to_port: "@ssh_port"
 
     ssh-internal:
-        network: "@aws_network_names"
-        groups: "@core_firewall_groups"
+        network: "#prefix(@aws_networks || @aws_network_prefix);"
         rules:
             tcp-in:
                 mode: ingress
@@ -70,8 +62,7 @@ firewall:
                 cidrs: "@network_cidr_base"
 
     nfs:
-        network: "@aws_network_names"
-        groups: "@core_firewall_groups"
+        network: "#prefix(@aws_networks || @aws_network_prefix);"
         rules:
             tcp-in:
                 mode: ingress
