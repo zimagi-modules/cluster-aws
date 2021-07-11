@@ -3,8 +3,10 @@ parents:
       profile: config
 
 config:
+    # Domain
     domain_provider: route53
 
+    # Network
     aws_networks:
         - us-east-1
         - us-east-2
@@ -30,36 +32,36 @@ config:
 
     aws_network_prefix: "aws-"
 
-    aws_nat_subnets:
+    aws_nat_zones:
         - a
         - b
-        - c
 
-    # Ubuntu 20.04LTS hvm:ebs-ssd
+    # Server - Ubuntu 20.04LTS hvm:ebs-ssd
     aws_ubuntu_user: ubuntu
     aws_ubuntu_image:
-        aws-us-east-1: ami-06c8ff16263f3db59
-        aws-us-east-2: ami-045a25a3e38518838
-        aws-us-west-1: ami-036e212884af0f982
-        aws-us-west-2: ami-02434e865f9594875
-        aws-ca-central-1: ami-0e203cecdf2da5eb2
-        aws-sa-east-1: ami-0f63b957b1d1cafe4
-        aws-eu-north-1: ami-0ac950d5f5d427d06
-        aws-eu-central-1: ami-078bc46c55d0e1238
-        aws-eu-west-1: ami-02331c6ac2e29429f
-        aws-eu-west-2: ami-00fc9310aee438387
-        aws-eu-west-3: ami-0f18b88aa23f8d929
-        aws-eu-south-1: ami-0207beff82d5d6d4c
-        aws-ap-east-1: ami-acfabadd
-        aws-ap-northeast-1: ami-01eb709c68485dfa8
-        aws-ap-northeast-2: ami-08364d0e699b512d2
-        aws-ap-northeast-3: ami-0d4d3819f42dd3023
-        aws-ap-south-1: ami-0244526712b13b081
-        aws-ap-southeast-1: ami-0eda6e135e78c1c35
-        aws-ap-southeast-2: ami-081fcba04ccce9bff
-        aws-af-south-1: ami-08d97e97ee67e9a44
-        aws-me-south-1: ami-02a6b255727b67446
+        us-east-1: ami-06c8ff16263f3db59
+        us-east-2: ami-045a25a3e38518838
+        us-west-1: ami-036e212884af0f982
+        us-west-2: ami-02434e865f9594875
+        ca-central-1: ami-0e203cecdf2da5eb2
+        sa-east-1: ami-0f63b957b1d1cafe4
+        eu-north-1: ami-0ac950d5f5d427d06
+        eu-central-1: ami-078bc46c55d0e1238
+        eu-west-1: ami-02331c6ac2e29429f
+        eu-west-2: ami-00fc9310aee438387
+        eu-west-3: ami-0f18b88aa23f8d929
+        eu-south-1: ami-0207beff82d5d6d4c
+        ap-east-1: ami-acfabadd
+        ap-northeast-1: ami-01eb709c68485dfa8
+        ap-northeast-2: ami-08364d0e699b512d2
+        ap-northeast-3: ami-0d4d3819f42dd3023
+        ap-south-1: ami-0244526712b13b081
+        ap-southeast-1: ami-0eda6e135e78c1c35
+        ap-southeast-2: ami-081fcba04ccce9bff
+        af-south-1: ami-08d97e97ee67e9a44
+        me-south-1: ami-02a6b255727b67446
 
+    # Storage
     aws_storage_performance_mode: generalPurpose
     aws_storage_throughput_mode: bursting
     aws_storage_provisioned_throughput: null
