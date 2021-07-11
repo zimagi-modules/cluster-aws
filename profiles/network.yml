@@ -1,4 +1,7 @@
 parents:
+    - module: cluster
+      profile: group
+
     - config
 
 network:
@@ -9,13 +12,15 @@ network:
         cidr_prefix: "@network_cidr_prefix"
         region: "<<value>>"
         dns_support: "@network_dns_support"
+        groups: "@network_group"
 
 network_peering:
-    aws: "#prefix(@aws_networks || @aws_network_prefix);"
+    "#rstrip(@aws_network_prefix || -);": "#prefix(@aws_networks || @aws_network_prefix);"
 
 firewall:
     all:
         network: "#prefix(@aws_networks || @aws_network_prefix);"
+        groups: "@network_group"
         rules:
             all-out:
                 mode: egress
@@ -30,6 +35,7 @@ firewall:
 
     internet:
         network: "#prefix(@aws_networks || @aws_network_prefix);"
+        groups: "@network_group"
         rules:
             all-out:
                 mode: egress
@@ -44,6 +50,7 @@ firewall:
 
     ssh-external:
         network: "#prefix(@aws_networks || @aws_network_prefix);"
+        groups: "@network_group"
         rules:
             tcp-in:
                 mode: ingress
@@ -53,6 +60,7 @@ firewall:
 
     ssh-internal:
         network: "#prefix(@aws_networks || @aws_network_prefix);"
+        groups: "@network_group"
         rules:
             tcp-in:
                 mode: ingress
@@ -63,6 +71,7 @@ firewall:
 
     nfs:
         network: "#prefix(@aws_networks || @aws_network_prefix);"
+        groups: "@network_group"
         rules:
             tcp-in:
                 mode: ingress
