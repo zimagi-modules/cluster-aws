@@ -1,6 +1,6 @@
 
 locals {
-  identifier = "redis-${var.name}-${var.network.name}"
+  identifier = "${var.name}-${var.network.name}"
 }
 
 provider "aws" {
