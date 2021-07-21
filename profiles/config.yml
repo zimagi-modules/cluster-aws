@@ -30,8 +30,6 @@ config:
         - af-south-1
         - me-south-1
 
-    aws_network_prefix: "aws-"
-
     aws_nat_zones:
         - a
         - b
