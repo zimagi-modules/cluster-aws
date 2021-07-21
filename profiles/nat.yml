@@ -7,7 +7,7 @@ parents:
 subnet:
     "nat-<<value>>":
         foreach: "@aws_nat_zones"
-        network: "#prefix(@aws_networks || @network_prefix);"
+        network: "#prefix(@aws_networks, @network_prefix)"
         cidr_prefix: 28
         zone_suffix: "<<value>>"
         use_public_ip: true
