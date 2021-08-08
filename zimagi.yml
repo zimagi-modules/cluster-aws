@@ -4,5 +4,5 @@ scripts: scripts/install.sh
 requirements: requirements.txt
 
 modules:
-    - remote: https://github.com/dccs-tech/zimagi-cluster.git
+    - remote: https://github.com/zimagi-modules/cluster.git
       reference: main
